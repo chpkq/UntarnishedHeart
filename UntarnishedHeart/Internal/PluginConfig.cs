@@ -15,6 +15,7 @@ public class PluginConfig : IPluginConfiguration
 
     public bool                 LeaderMode           { get; set; }
     public bool                 AutoRecommendGear    { get; set; }
+    public bool                 AutoRepairGear       { get; set; }
     public int                  RunTimes             { get; set; } = -1;
     public List<Preset>         Presets              { get; set; } = [];
     public ContentsFinderOption ContentsFinderOption { get; set; } = ContentsFinderHelper.DefaultOption;
@@ -57,5 +58,5 @@ public class PluginConfig : IPluginConfiguration
         DService.Instance().PI.SavePluginConfig(this);
 
     internal PresetExecutorRunOptions CreatePresetRunOptions(ExecuteActionRuntimeCursor? startCursor = null) =>
-        new(RunTimes, LeaderMode, AutoRecommendGear, ContentEntryType, ContentsFinderOption, startCursor);
+        new(RunTimes, LeaderMode, AutoRecommendGear, AutoRepairGear, ContentEntryType, ContentsFinderOption, startCursor);
 }

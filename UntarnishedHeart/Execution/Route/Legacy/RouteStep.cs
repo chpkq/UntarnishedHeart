@@ -214,7 +214,7 @@ public class DutyOptions : IEquatable<DutyOptions>
     public ContentsFinderOption ContentsFinderOption { get; set; } = ContentsFinderHelper.DefaultOption.Clone();
 
     internal PresetExecutorRunOptions ToRunOptions() =>
-        new(RunTimes, LeaderMode, AutoRecommendGear, ContentEntryType, ContentsFinderOption);
+        new(RunTimes, LeaderMode, AutoRecommendGear, false, ContentEntryType, ContentsFinderOption);
 
     public bool Equals(DutyOptions? other)
     {

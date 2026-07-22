@@ -207,6 +207,16 @@ public class MainWindow : Window
         }
 
         ImGuiOm.TooltipHover("勾选后, 路线中每次进入副本后都会自动装备当前职业的最强装备");
+
+        ImGui.SameLine();
+        var autoRepairGear = config.AutoRepairGear;
+        if (ImGui.Checkbox("自动修理装备###MainRouteAutoRepairGear", ref autoRepairGear))
+        {
+            config.AutoRepairGear = autoRepairGear;
+            config.Save();
+        }
+
+        ImGuiOm.TooltipHover("勾选后, 每次进入副本前会检查已装备物品；发现耐久度为 0% 时，自动修理全部已装备物品");
     }
 
     private static void DrawPrimaryActionSection()
@@ -356,7 +366,7 @@ public class MainWindow : Window
         var selectedRoute = config.Routes[selectedRouteIndex];
         var startCursor   = PendingExecutionStartManager.GetRouteStartCursor(selectedRoute);
 
-        ExecutionManager.StartRouteExecution(selectedRoute, config.AutoRecommendGear, startCursor);
+        ExecutionManager.StartRouteExecution(selectedRoute, config.AutoRecommendGear, config.AutoRepairGear, startCursor);
         PendingExecutionStartManager.ClearRoute(selectedRoute);
 
         ExecutionUIHelper.OpenStatusWindow();

@@ -23,6 +23,7 @@ public sealed class RouteExecutor
 (
     Route                     route,
     bool                      autoRecommendGear,
+    bool                      autoRepairGear,
     ExecuteActionRuntimeCursor? startCursor = null
 ) : ExecuteActionExecutionHost, IDisposable
 {
@@ -267,7 +268,7 @@ public sealed class RouteExecutor
         DisposeCurrentExecutor();
 
         SetRunningMessage($"{actionLabel} - 开始执行预设: {preset.Name}");
-        CurrentExecutor = new PresetExecutor(preset, action.DutyOptions.ToRunOptions(autoRecommendGear));
+        CurrentExecutor = new PresetExecutor(preset, action.DutyOptions.ToRunOptions(autoRecommendGear, autoRepairGear));
         if (IsStopAfterDutyCompletionRequested)
             CurrentExecutor.RequestStopAfterDutyCompletion();
 

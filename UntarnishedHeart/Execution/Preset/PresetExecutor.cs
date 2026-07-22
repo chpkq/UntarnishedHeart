@@ -11,6 +11,7 @@ using Lumina.Excel.Sheets;
 using OmenTools.Dalamud;
 using OmenTools.Info.Game.Enums;
 using OmenTools.Interop.Game;
+using OmenTools.Interop.Game.ExecuteCommand.Implementations;
 using OmenTools.Interop.Game.Helpers;
 using OmenTools.Interop.Game.Lumina;
 using OmenTools.Interop.Windows.Helpers;
@@ -555,6 +556,9 @@ public class PresetExecutor : ExecuteActionExecutionHost, IDisposable
             cancellationToken
         );
 
+        if (runOptions.AutoRepairGear)
+            await RepairBrokenEquippedGearAsync(cancellationToken);
+
         SetRunningMessage("等待进入下一局");
 
         while (!cancellationToken.IsCancellationRequested)
@@ -597,6 +601,41 @@ public class PresetExecutor : ExecuteActionExecutionHost, IDisposable
 
             await Task.Delay(100, cancellationToken);
         }
+    }
+
+    private async Task RepairBrokenEquippedGearAsync(CancellationToken cancellationToken)
+    {
+        SetRunningMessage("检查已装备物品耐久度");
+
+        var hasBrokenEquipment = false;
+
+        unsafe
+        {
+            var inventoryManager = InventoryManager.Instance();
+            if (inventoryManager == null)
+                return;
+
+            var equippedItems = inventoryManager->GetInventoryContainer(InventoryType.EquippedItems);
+            if (equippedItems == null || !equippedItems->IsLoaded)
+                return;
+
+            for (var slotIndex = 0; slotIndex < equippedItems->Size; slotIndex++)
+            {
+                var item = equippedItems->GetInventorySlot(slotIndex);
+                if (item == null || item->ItemId == 0 || item->Condition != 0)
+                    continue;
+
+                hasBrokenEquipment = true;
+                break;
+            }
+        }
+
+        if (!hasBrokenEquipment)
+            return;
+
+        SetRunningMessage("检测到耐久度为 0% 的装备，修理全部已装备物品");
+        RepairCommand.RepairEquippedItems();
+        await Task.Delay(100, cancellationToken);
     }
 
     private async Task OpenTreasuresAsync(CancellationToken cancellationToken)

@@ -23,8 +23,8 @@ public sealed class DutyOptions : IEquatable<DutyOptions>
     [JsonProperty("ContentsFinderOption")]
     public ContentsFinderOption ContentsFinderOption { get; set; } = ContentsFinderHelper.DefaultOption.Clone();
 
-    internal PresetExecutorRunOptions ToRunOptions(bool autoRecommendGear = false) =>
-        new(RunTimes, LeaderMode, AutoRecommendGear || autoRecommendGear, ContentEntryType, ContentsFinderOption);
+    internal PresetExecutorRunOptions ToRunOptions(bool autoRecommendGear = false, bool autoRepairGear = false) =>
+        new(RunTimes, LeaderMode, AutoRecommendGear || autoRecommendGear, autoRepairGear, ContentEntryType, ContentsFinderOption);
 
     public bool Equals(DutyOptions? other)
     {

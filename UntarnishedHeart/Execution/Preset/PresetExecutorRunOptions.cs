@@ -11,6 +11,7 @@ internal sealed class PresetExecutorRunOptions
         int                       maxRound,
         bool                      leaderMode,
         bool                      autoRecommendGear,
+        bool                      autoRepairGear,
         ContentEntryType          contentEntryType,
         ContentsFinderOption      contentsFinderOption,
         ExecuteActionRuntimeCursor? startCursor = null
@@ -19,6 +20,7 @@ internal sealed class PresetExecutorRunOptions
         MaxRound             = maxRound;
         LeaderMode           = leaderMode;
         AutoRecommendGear    = autoRecommendGear;
+        AutoRepairGear       = autoRepairGear;
         ContentEntryType     = contentEntryType;
         ContentsFinderOption = contentsFinderOption.Clone();
         StartCursor          = startCursor == null ? null : new(startCursor.StepIndex, startCursor.Phase, startCursor.ActionIndex);
@@ -29,6 +31,8 @@ internal sealed class PresetExecutorRunOptions
     public bool LeaderMode { get; }
 
     public bool AutoRecommendGear { get; }
+
+    public bool AutoRepairGear { get; }
 
     public ContentEntryType ContentEntryType { get; }
 

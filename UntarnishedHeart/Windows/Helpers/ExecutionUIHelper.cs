@@ -101,8 +101,14 @@ internal static class ExecutionUIHelper
         return reasons;
     }
 
-    public static void OpenStatusWindow() =>
-        WindowManager.Instance().Get<ExecutionStatusWindow>().IsOpen = true;
+    public static void OpenStatusWindow()
+    {
+        var windowManager = WindowManager.Instance();
+        windowManager.Get<ExecutionStatusWindow>().IsOpen = true;
+
+        if (PluginConfig.Instance().CurrentExecutionMode == ExecutionMode.Route)
+            windowManager.Get<RouteCurrentPresetWindow>().IsOpen = true;
+    }
 
     public static void StopCurrentExecution()
     {
