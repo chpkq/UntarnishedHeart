@@ -98,7 +98,7 @@ internal static class DutyOptionsEditor
                     changed                       = true;
                 }
 
-                ImGuiOm.TooltipHover("勾选后, 在进入副本后, 会自动装备当前职业的最强装备");
+                ImGuiOm.TooltipHover("勾选后, 每次进入副本前都会检查并装备当前职业的最强装备");
             }
         }
 
