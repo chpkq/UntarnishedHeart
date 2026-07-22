@@ -22,6 +22,7 @@ namespace UntarnishedHeart.Execution.Route;
 public sealed class RouteExecutor
 (
     Route                     route,
+    bool                      autoRecommendGear,
     ExecuteActionRuntimeCursor? startCursor = null
 ) : ExecuteActionExecutionHost, IDisposable
 {
@@ -266,7 +267,7 @@ public sealed class RouteExecutor
         DisposeCurrentExecutor();
 
         SetRunningMessage($"{actionLabel} - 开始执行预设: {preset.Name}");
-        CurrentExecutor = new PresetExecutor(preset, action.DutyOptions.ToRunOptions());
+        CurrentExecutor = new PresetExecutor(preset, action.DutyOptions.ToRunOptions(autoRecommendGear));
         if (IsStopAfterDutyCompletionRequested)
             CurrentExecutor.RequestStopAfterDutyCompletion();
 

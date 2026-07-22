@@ -197,6 +197,16 @@ public class MainWindow : Window
             WindowManager.Instance().Get<RouteEditor>().IsOpen = true;
 
         DrawPendingStartDescription(PendingExecutionStartManager.GetRouteDescription(GetSelectedRoute(selectedRouteIndex)));
+
+        ImGui.Spacing();
+        var autoRecommendGear = config.AutoRecommendGear;
+        if (ImGui.Checkbox("自动最强装备###MainRouteAutoRecommendGear", ref autoRecommendGear))
+        {
+            config.AutoRecommendGear = autoRecommendGear;
+            config.Save();
+        }
+
+        ImGuiOm.TooltipHover("勾选后, 路线中每次进入副本后都会自动装备当前职业的最强装备");
     }
 
     private static void DrawPrimaryActionSection()
@@ -346,7 +356,7 @@ public class MainWindow : Window
         var selectedRoute = config.Routes[selectedRouteIndex];
         var startCursor   = PendingExecutionStartManager.GetRouteStartCursor(selectedRoute);
 
-        ExecutionManager.StartRouteExecution(selectedRoute, startCursor);
+        ExecutionManager.StartRouteExecution(selectedRoute, config.AutoRecommendGear, startCursor);
         PendingExecutionStartManager.ClearRoute(selectedRoute);
 
         ExecutionUIHelper.OpenStatusWindow();

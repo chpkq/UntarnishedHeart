@@ -34,10 +34,10 @@ internal static class ExecutionManager
         PresetExecutor.Start();
     }
 
-    public static void StartRouteExecution(Route.Route route, ExecuteActionRuntimeCursor? startCursor = null)
+    public static void StartRouteExecution(Route.Route route, bool autoRecommendGear, ExecuteActionRuntimeCursor? startCursor = null)
     {
         StopRouteExecutor();
-        RouteExecutor = new(route, startCursor);
+        RouteExecutor = new(route, autoRecommendGear, startCursor);
         RouteExecutor.Start();
     }
 
