@@ -206,7 +206,7 @@ public class MainWindow : Window
             config.Save();
         }
 
-        ImGuiOm.TooltipHover("勾选后, 路线中每次进入副本后都会自动装备当前职业的最强装备");
+        ImGuiOm.TooltipHover("勾选后, 路线中每次进入副本前都会检查并装备当前职业的最强装备");
 
         ImGui.SameLine();
         var autoRepairGear = config.AutoRepairGear;

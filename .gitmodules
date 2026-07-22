@@ -1,4 +1,4 @@
 [submodule "OmenTools"]
 	path = OmenTools
-	url = https://github.com/AtmoOmen/OmenTools.git
+	url = https://github.com/chpkq/OmenTools.git
 	branch = main

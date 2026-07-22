@@ -316,9 +316,6 @@ public class PresetExecutor : ExecuteActionExecutionHost, IDisposable
     {
         await WaitUntilAsync(() => DService.Instance().DutyState.IsDutyStarted, "等待副本开始", cancellationToken);
 
-        if (runOptions.AutoRecommendGear)
-            await EquipRecommendedGearAsync(cancellationToken);
-
         var stepIndex        = runOptions.StartCursor?.StepIndex ?? 0;
         var nextStartCursor  = runOptions.StartCursor;
 
@@ -558,6 +555,9 @@ public class PresetExecutor : ExecuteActionExecutionHost, IDisposable
 
         if (runOptions.AutoRepairGear)
             await RepairBrokenEquippedGearAsync(cancellationToken);
+
+        if (runOptions.AutoRecommendGear)
+            await EquipRecommendedGearAsync(cancellationToken);
 
         SetRunningMessage("等待进入下一局");
 
