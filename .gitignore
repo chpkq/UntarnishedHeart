@@ -2,6 +2,7 @@
 obj/
 bin/
 *.user
+.DS_Store
 /.idea
 outputs/
 docs/
